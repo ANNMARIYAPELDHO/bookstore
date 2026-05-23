@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - BookStore</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: #1a1a2e; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .card { background: #fff; padding: 40px; border-radius: 12px; width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        h1 { text-align: center; color: #1a1a2e; margin-bottom: 8px; font-size: 28px; }
+        p.sub { text-align: center; color: #888; margin-bottom: 28px; font-size: 14px; }
+        label { display: block; margin-bottom: 5px; color: #333; font-size: 14px; font-weight: bold; }
+        input { width: 100%; padding: 12px; margin-bottom: 18px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
+        input:focus { border-color: #e94560; }
+        button { width: 100%; padding: 13px; background: #e94560; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #c73652; }
+        .link { text-align: center; margin-top: 18px; font-size: 14px; color: #666; }
+        .link a { color: #e94560; text-decoration: none; }
+        .emoji { text-align: center; font-size: 40px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="emoji">📚</div>
+        <h1>BookStore</h1>
+        <p class="sub">Welcome back!</p>
+        <form action="/login" method="POST">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="your@email.com" required />
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit">Login</button>
+        </form>
+        <div class="link">No account? <a href="/signup">Sign up</a></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book - BookStore</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: #f4f1eb; min-height: 100vh; }
+        nav { background: #1a1a2e; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+        nav h1 { color: white; font-size: 22px; }
+        nav h1 span { color: #e94560; }
+        .back { color: #aaa; text-decoration: none; font-size: 14px; border: 1px solid #aaa; padding: 8px 16px; border-radius: 8px; }
+        .back:hover { color: white; border-color: white; }
+        .container { display: flex; justify-content: center; padding: 50px 20px; }
+        .card { background: white; padding: 40px; border-radius: 12px; width: 420px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        h2 { color: #1a1a2e; margin-bottom: 24px; font-size: 22px; }
+        label { display: block; margin-bottom: 5px; color: #333; font-size: 14px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 18px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; font-family: Georgia, serif; }
+        input:focus, textarea:focus { border-color: #e94560; }
+        textarea { height: 90px; resize: none; }
+        button { width: 100%; padding: 13px; background: #e94560; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #c73652; }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>📚 Book<span>Store</span></h1>
+        <a href="/home?user=<%= user %>" class="back">← Back to Home</a>
+    </nav>
+    <div class="container">
+        <div class="card">
+            <h2>✏️ Edit Book</h2>
+            <form action="/edit-book/<%= book._id %>" method="POST">
+                <input type="hidden" name="user" value="<%= user %>" />
+                <label>Book Title</label>
+                <input type="text" name="title" value="<%= book.title %>" required />
+                <label>Author</label>
+                <input type="text" name="author" value="<%= book.author %>" required />
+                <label>Price (₹)</label>
+                <input type="number" name="price" value="<%= book.price %>" required />
+                <label>Description</label>
+                <textarea name="description" required><%= book.description %></textarea>
+                <button type="submit">Update Book</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

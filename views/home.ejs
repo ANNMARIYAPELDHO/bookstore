@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - BookStore</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: #f4f1eb; min-height: 100vh; }
+        nav { background: #1a1a2e; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+        nav h1 { color: white; font-size: 22px; }
+        nav h1 span { color: #e94560; }
+        .nav-right { display: flex; gap: 12px; align-items: center; }
+        .nav-right p { color: #aaa; font-size: 14px; }
+        .btn { padding: 9px 18px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; text-decoration: none; display: inline-block; }
+        .btn-red { background: #e94560; color: white; }
+        .btn-outline { background: transparent; color: #aaa; border: 1px solid #aaa; }
+        .btn-outline:hover { color: white; border-color: white; }
+        .container { padding: 40px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        h2 { color: #1a1a2e; font-size: 22px; }
+        .search-box input {
+            padding: 10px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 250px;
+            outline: none;
+            font-family: Georgia, serif;
+        }
+        .search-box input:focus { border-color: #e94560; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .card .emoji { font-size: 36px; margin-bottom: 12px; }
+        .card h3 { color: #1a1a2e; margin-bottom: 6px; font-size: 17px; }
+        .card .author { color: #888; font-size: 13px; margin-bottom: 10px; }
+        .card .price { color: #e94560; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+        .card .desc { color: #555; font-size: 13px; margin-bottom: 16px; line-height: 1.5; }
+        .card-btns { display: flex; gap: 8px; }
+        .delete-btn { flex: 1; padding: 9px; background: #fff0f0; color: #e94560; border: 1px solid #e94560; border-radius: 8px; cursor: pointer; font-size: 13px; }
+        .delete-btn:hover { background: #e94560; color: white; }
+        .edit-btn { flex: 1; padding: 9px; background: #f0f4ff; color: #1a1a2e; border: 1px solid #1a1a2e; border-radius: 8px; cursor: pointer; font-size: 13px; text-decoration: none; display: inline-block; text-align: center; }
+        .edit-btn:hover { background: #1a1a2e; color: white; }
+        .empty { text-align: center; color: #999; padding: 60px 0; font-size: 18px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>📚 Book<span>Store</span></h1>
+        <div class="nav-right">
+            <p>Hello, <%= user %></p>
+            <a href="/add-book?user=<%= user %>" class="btn btn-red">+ Add Book</a>
+            <a href="/logout" class="btn btn-outline">Logout</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="top-bar">
+            <h2>All Books</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search by title..." onkeyup="searchBooks()" />
+            </div>
+        </div>
+
+        <% if (books.length === 0) { %>
+            <div class="empty">📭 No books yet. Add one!</div>
+        <% } else { %>
+            <div class="grid" id="bookGrid">
+                <% books.forEach(book => { %>
+                <div class="card" data-title="<%= book.title ? book.title.toLowerCase() : '' %>">
+                    <div class="emoji">📖</div>
+                    <h3><%= book.title || 'Untitled' %></h3>
+                    <div class="author">by <%= book.author || 'Unknown' %></div>
+                    <div class="price">₹<%= book.price || 'N/A' %></div>
+                    <div class="desc"><%= book.description || 'No description available.' %></div>
+                    <div class="card-btns">
+                        <a href="/edit-book/<%= book._id %>?user=<%= user %>" class="edit-btn">✏️ Edit</a>
+                        <form action="/delete/<%= book._id %>" method="POST" style="flex:1">
+                            <input type="hidden" name="user" value="<%= user %>" />
+                            <button class="delete-btn" type="submit">🗑 Delete</button>
+                        </form>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        function searchBooks() {
+            const input = document.getElementById("searchInput").value.toLowerCase()
+            const cards = document.querySelectorAll(".card")
+            cards.forEach(card => {
+                const title = card.getAttribute("data-title") || ""
+                card.style.display = title.includes(input) ? "block" : "none"
+            })
+        }
+    </script>
+</body>
+</html>
+
